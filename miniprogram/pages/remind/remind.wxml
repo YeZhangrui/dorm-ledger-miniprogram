@@ -1,0 +1,99 @@
+<view class="page-wrap">
+  <view class="page-head">
+    <view>
+      <view class="h1">提醒与月报</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-head">
+      <view>
+        <view class="h2">生成催缴话术</view>
+      </view>
+    </view>
+
+    <view class="field">
+      <view class="lbl">找谁</view>
+      <sheet-select
+        title="找谁催"
+        options="{{whoOptions}}"
+        index="{{whoIndex}}"
+        disabled="{{!hasOpen}}"
+        empty="当前没有待结清，不用催"
+        bind:change="onWho"
+      />
+    </view>
+
+    <!-- 二级菜单：语气（与底部 tabBar / 明细页 .seg 同一套选中态） -->
+    <view class="field-block">
+      <view class="field-head">
+        <view class="lbl">语气</view>
+        <text class="hint-inline">选好后再点下面生成</text>
+      </view>
+      <view class="tone-picker">
+        <view
+          class="tone-option {{toneIndex === index ? 'on' : ''}}"
+          wx:for="{{tones}}"
+          wx:key="key"
+          data-i="{{index}}"
+          bindtap="onTone"
+        >
+          <text class="tone-name">{{item.name}}</text>
+          <text class="tone-desc">{{item.desc}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="btn" style="margin-top:32rpx" bindtap="generate">生成提醒话术</view>
+
+    <view wx:if="{{remindText}}" class="quote" style="margin-top:24rpx">
+      <text class="pre-wrap">{{remindText}}</text>
+    </view>
+    <view wx:if="{{remindText}}" class="actionbar">
+      <view class="btn sm" bindtap="copyRemind">复制这段话</view>
+      <view class="btn sm ghost" bindtap="generate">换一个语气</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-head">
+      <view>
+        <view class="h2">本月月报</view>
+      </view>
+    </view>
+
+    <view class="grid2" style="margin-bottom:24rpx">
+      <view class="stat">
+        <view class="k">本月总额</view>
+        <view class="v">{{report.total}}</view>
+      </view>
+      <view class="stat">
+        <view class="k">人均</view>
+        <view class="v">{{report.per}}</view>
+      </view>
+      <view class="stat">
+        <view class="k">笔数</view>
+        <view class="v">{{report.count}}</view>
+      </view>
+      <view class="stat">
+        <view class="k">结清进度</view>
+        <view class="v {{report.ratio >= 100 ? 'pos' : 'neg'}}">{{report.ratio}}%</view>
+      </view>
+    </view>
+
+    <view class="bars">
+      <view class="b" wx:for="{{report.cats}}" wx:key="cat">
+        <view class="l">
+          <text>{{item.icon}} {{item.cat}}</text>
+          <text>{{item.amountText}} · {{item.pct}}%</text>
+        </view>
+        <view class="bar"><view class="bar-fill" style="width:{{item.w}}%"></view></view>
+      </view>
+    </view>
+
+    <view class="quote" style="margin-top:24rpx">
+      <text class="pre-wrap">{{report.text}}</text>
+    </view>
+    <view class="btn ghost block" style="margin-top:24rpx" bindtap="copyReport">复制月报</view>
+  </view>
+</view>

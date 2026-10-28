@@ -1,0 +1,76 @@
+/* 成员设置页局部样式：通用样式在 app.wxss，这里只补本页特有的部分 */
+
+.mrow {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+  padding: 12rpx 16rpx;
+  border: 2rpx solid var(--line);
+  border-radius: 20rpx;
+  background: var(--surface-2);
+}
+
+/* 覆盖全局 input{min-height:88rpx}，否则每行 44px 太高 */
+.mname {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 76rpx;
+  font-size: 28rpx;
+  background: var(--surface);
+}
+
+.del {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 16rpx;
+  background: var(--danger-soft);
+  border: 2rpx solid #efd1ce;
+  color: var(--danger);
+  font-size: 26rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.actionbar {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 24rpx;
+}
+
+/* 云端模式：成员行（左名字 + 徽标，右侧移除） */
+.cloud-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.cloud-name-text {
+  min-width: 0;
+  max-width: 100%;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--ink);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mono-code {
+  font-family: var(--font-num);
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--brand-ink);
+}
+
+/* 自绘弹窗 */
+.edit-mask{position:fixed;left:0;right:0;top:0;bottom:0;z-index:60;display:flex;align-items:flex-end;background:rgba(10,26,20,.45)}
+.edit-sheet{width:100%;padding:20rpx 32rpx calc(32rpx + env(safe-area-inset-bottom));background:var(--surface);border-radius:36rpx 36rpx 0 0;box-shadow:0 -24rpx 64rpx -32rpx rgba(10,26,20,.5)}
+.edit-handle{width:72rpx;height:8rpx;margin:0 auto 22rpx;border-radius:99rpx;background:var(--line-strong)}
+.edit-hd{display:flex;align-items:baseline;justify-content:space-between;gap:20rpx;margin-bottom:20rpx}

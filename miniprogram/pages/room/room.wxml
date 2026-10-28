@@ -1,0 +1,135 @@
+<view class="page-wrap">
+  <view class="page-head">
+    <view>
+      <view class="h1">房间码</view>
+    </view>
+  </view>
+
+  <!-- 云端房间：和下面的"本机账本"分开显示，避免两个房间码混在一起看不懂 -->
+  <view wx:if="{{cloudReady}}" class="card">
+    <view class="card-head">
+      <view>
+        <view class="h2">云端房间</view>
+        <view class="card-sub">室友用同一个房间码，就能在各自手机上看到同一本账</view>
+      </view>
+    </view>
+    <view wx:if="{{cloudRoom}}" class="cloud-room">
+      <view class="cloud-room-code">{{cloudRoom.code}}</view>
+      <view class="cloud-room-main">
+        <view class="cloud-room-name">{{cloudRoom.name}}</view>
+        <view class="cloud-room-meta">{{cloudRoom.role === 'owner' ? '我是房主' : '我是成员'}} · 云端账本</view>
+      </view>
+    </view>
+    <view wx:else class="cloud-room-empty">
+      <view class="hint" style="margin:0 0 16rpx">还没有连接云端房间，现在的账本只在这台手机上。</view>
+      <view class="btn" bindtap="goOnboarding">创建或加入云端房间</view>
+    </view>
+
+    <view wx:if="{{cloudRoom}}" class="cloud-actions">
+      <button class="btn sm share-btn" open-type="share">分享给室友</button>
+      <view class="btn sm ghost" bindtap="resetCloudCode">重置房间码</view>
+      <view class="btn sm ghost" bindtap="leaveCloudRoom">退出房间</view>
+      <view wx:if="{{cloudRoom.role === 'owner'}}" class="btn sm danger" bindtap="dissolveCloudRoom">解散房间</view>
+    </view>
+
+    <view wx:if="{{showDevTools}}" class="cloud-check" bindtap="checkCloud">云端连接自检 ›</view>
+  </view>
+
+  <view class="card">
+    <view class="card-head">
+      <view>
+        <view class="h2">当前房间</view>
+        <view class="card-sub">本机数据按房间码分区存放</view>
+      </view>
+    </view>
+
+    <view class="room-current">
+      <view class="room-current-main">
+        <view class="room-code">{{code}}</view>
+        <view class="room-meta">{{label}} · {{count}} 笔 · {{totalText}}</view>
+      </view>
+      <view class="btn sm ghost" bindtap="copyCode">复制房间码</view>
+    </view>
+
+    <view class="field" style="margin-top:28rpx">
+      <view class="lbl">加入 / 切换房间</view>
+      <view class="room-join">
+        <input class="input" value="{{joinText}}" bindinput="onJoinInput" maxlength="8" placeholder-class="ph" placeholder="输入 6 位房间码" />
+        <view class="btn sm" bindtap="join">加入</view>
+      </view>
+      <view class="hint">房间码 6 位，字符表去掉了 0 O 1 I l；本机没有的房间会自动建一个空房间。</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-head">
+      <view>
+        <view class="h2">本机房间</view>
+        <view class="card-sub">点一下即切换；当前房间高亮</view>
+      </view>
+    </view>
+
+    <view class="room-list">
+      <view
+        class="room-item {{item.on ? 'on' : ''}}"
+        wx:for="{{rooms}}"
+        wx:key="code"
+        data-code="{{item.code}}"
+        bindtap="pickRoom"
+      >
+        <view class="room-item-code">{{item.code}}</view>
+        <view class="room-item-meta">{{item.label}} · {{item.count}} 笔 · {{item.totalText}}</view>
+        <view wx:if="{{item.on}}" class="room-item-check">当前</view>
+      </view>
+    </view>
+
+    <view class="btn sm ghost" style="margin-top:24rpx" bindtap="createNew">＋ 新建房间</view>
+  </view>
+
+  <view class="card">
+    <view class="card-head">
+      <view>
+        <view class="h2">导出 / 导入</view>
+        <view class="card-sub">导出成 JSON 存起来；导入默认落进新房间，不覆盖现有账本</view>
+      </view>
+    </view>
+
+    <view class="room-io">
+      <view class="btn sm ghost" bindtap="exportJson">导出 JSON（复制到剪贴板）</view>
+      <view wx:if="{{showDevTools}}" class="btn sm ghost" bindtap="openImport">导入 JSON</view>
+    </view>
+    <view class="hint" style="margin-top:16rpx">导出内容里带房间码；把 JSON 粘到「文件传输助手」就是备份文件。</view>
+
+    <view wx:if="{{importing}}" class="import-box">
+      <view class="field">
+        <view class="lbl">粘贴导出的 JSON</view>
+        <textarea
+          class="textarea code-input"
+          value="{{importText}}"
+          bindinput="onImportInput"
+          maxlength="100000"
+          placeholder-class="ph"
+          placeholder='{"schema":4,"room":"A7K2M9","members":[…],"expenses":[…] }'
+         show-confirm-bar="{{false}}" />
+      </view>
+      <view class="room-io">
+        <view class="btn sm ghost" bindtap="readClipboard">从剪贴板读取</view>
+        <view class="btn sm" bindtap="parseImport">校验并预览</view>
+        <view class="btn sm ghost" bindtap="closeImport">取消</view>
+      </view>
+
+      <view wx:if="{{importDraft}}" class="import-preview">
+        <view class="import-info">{{importInfo}}</view>
+        <view class="room-io">
+          <view class="btn sm" bindtap="applyNew">导入到新房间（推荐）</view>
+          <view class="btn sm ghost" bindtap="applyOverwrite">覆盖当前房间</view>
+        </view>
+        <view class="hint">覆盖会二次确认，且旧账不自动备份；想合并请导进新房间再人工核对。</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="about-link" bindtap="goAbout">
+    <text class="link">隐私政策与用户协议</text>
+  </view>
+</view>

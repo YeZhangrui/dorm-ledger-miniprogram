@@ -1,0 +1,23 @@
+# 依赖与构建产物
+node_modules/
+miniprogram/node_modules/
+
+# 微信开发者工具的个人配置（每个人的本地设置不同）
+project.private.config.json
+miniprogram/project.private.config.json
+
+# 云函数部署时生成的共享副本（由 tools/prepare-cloudfunctions.cmd 生成，不入库）
+miniprogram/cloudfunctions/*/shared/
+
+# 预览 / 审计的生成物（脚本可随时重跑）
+miniprogram/_preview/
+miniprogram/_audit/*.json
+miniprogram/_audit/*.md
+
+# 本地快照包
+_snapshots/
+
+# 系统 / 编辑器
+.DS_Store
+Thumbs.db
+*.log

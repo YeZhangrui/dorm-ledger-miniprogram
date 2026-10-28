@@ -1,0 +1,34 @@
+/* 关于页：长文本排版，读起来不费劲 */
+
+.p-text {
+  font-size: 26rpx;
+  line-height: 1.75;
+  color: var(--ink-2);
+  margin-top: 12rpx;
+}
+
+.p-text:first-child {
+  margin-top: 0;
+}
+
+.p-text .strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.sec {
+  margin-top: 28rpx;
+  padding-top: 24rpx;
+  border-top: 2rpx dashed var(--line);
+}
+
+.sec-t {
+  font-size: 27rpx;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4rpx;
+}
+
+.card .card-sub {
+  margin-bottom: 8rpx;
+}

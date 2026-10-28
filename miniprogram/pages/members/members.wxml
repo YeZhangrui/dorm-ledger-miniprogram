@@ -1,0 +1,115 @@
+<view class="page-wrap">
+  <view class="page-head">
+    <view>
+      <view class="h1">成员设置</view>
+    </view>
+    <view class="pill">{{isCloud ? cloudRows.length : rows.length}} 人（2–8）</view>
+  </view>
+
+  <!-- 云端模式 -->
+  <block wx:if="{{isCloud}}">
+    <view class="card">
+      <view class="card-head">
+        <view>
+          <view class="h2">房间成员</view>
+          <view class="card-sub">房间码 {{roomCode}}{{isOwner ? ' · 我是房主' : ''}}</view>
+        </view>
+      </view>
+
+      <view class="mrow" wx:for="{{cloudRows}}" wx:key="name">
+        <view class="cloud-name">
+          <text class="cloud-name-text">{{item.name}}</text>
+          <text wx:if="{{item.isMe}}" class="tag ok">我</text>
+          <text wx:if="{{item.pending}}" class="tag low">待加入</text>
+          <text wx:if="{{item.role === 'owner'}}" class="tag rc">房主</text>
+        </view>
+        <view
+          wx:if="{{isOwner && !item.isMe}}"
+          class="del"
+          data-name="{{item.name}}"
+          bindtap="onRemoveCloud"
+        >✕</view>
+      </view>
+
+    </view>
+
+    <view class="card">
+      <view class="card-head">
+        <view>
+          <view class="h2">我的昵称</view>
+            </view>
+      </view>
+      <input
+        class="input"
+        value="{{newName}}"
+        bindinput="onMyNameInput"
+        maxlength="8"
+        placeholder-class="ph"
+        placeholder="{{myName || '我的昵称'}}"
+      />
+      <view class="actionbar">
+        <view class="btn sm" bindtap="saveMyName">保存昵称</view>
+        <view wx:if="{{isOwner}}" class="btn sm ghost" bindtap="onAddCloud">＋ 添加室友</view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-head">
+        <view><view class="h2">邀请室友</view></view>
+      </view>
+      <view class="hint" style="margin-top:0">把房间码 <text class="mono-code">{{roomCode}}</text> 发给室友，或者直接分享小程序卡片。</view>
+      <view class="btn ghost" style="margin-top:16rpx" bindtap="goRoom">查看 / 邀请（房间页）</view>
+    </view>
+  </block>
+
+  <!-- 本机模式（原来的一整套编辑能力保持不变） -->
+  <block wx:else>
+    <view class="card">
+      <view class="card-head">
+        <view>
+          <view class="h2">寝室成员</view>
+          <view class="card-sub">选中的是「当前记账人」，新账默认他垫付</view>
+        </view>
+      </view>
+
+      <radio-group bindchange="onSetMe">
+        <view class="mrow" wx:for="{{rows}}" wx:key="id">
+          <radio value="{{index}}" checked="{{index === meIndex}}" color="#116e56" />
+          <input class="input mname" value="{{item.name}}" data-i="{{index}}" bindinput="onName" maxlength="8" placeholder-class="ph" placeholder="成员名字" />
+          <view class="del" data-i="{{index}}" bindtap="onDel">✕</view>
+        </view>
+      </radio-group>
+
+      <view class="actionbar">
+        <view class="btn sm ghost" bindtap="onAdd">＋ 添加成员</view>
+        <view class="btn sm" bindtap="onSave">保存并重算</view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-head">
+        <view><view class="h2">说明</view></view>
+      </view>
+      <view class="hint">· 改名会同步所有历史记录（垫付人、参与人、结清状态）。</view>
+      <view class="hint">· 删除成员：历史账目保留，余额表里显示“已退出”，欠的钱照算。</view>
+      <view class="hint">· 人数改成 3 人或 8 人都可以，分摊、结算与月报会自动重算。</view>
+    </view>
+  </block>
+
+  <!-- 添加室友：自绘弹窗，替换系统灰色 input 弹窗 -->
+  <view wx:if="{{addOpen}}" class="edit-mask" bindtap="onAddCancel">
+    <view class="edit-sheet" catchtap="noop">
+      <view class="edit-handle"></view>
+      <view class="edit-hd"><view class="h2">添加室友</view></view>
+      <view class="field">
+        <view class="lbl">名字</view>
+        <input class="input" value="{{addName}}" bindinput="onAddName" maxlength="8" focus="{{addOpen}}" placeholder-class="ph" placeholder="例如：李昊" />
+      </view>
+      <view class="hint">对方用同名从房间码加入时会自动认领这一行，不会重复占位。</view>
+      <view class="actionbar">
+        <view class="btn" bindtap="onAddConfirm">添加</view>
+        <view class="btn ghost" bindtap="onAddCancel">取消</view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,61 @@
+{
+  "pages": [
+    "pages/onboarding/onboarding",
+    "pages/index/index",
+    "pages/book/book",
+    "pages/receipt/receipt",
+    "pages/list/list",
+    "pages/remind/remind",
+    "pages/members/members",
+    "pages/room/room",
+    "pages/about/about"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#0d3b2d",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "寝室公共开支台账",
+    "backgroundColor": "#f4f2ec",
+    "backgroundTextStyle": "light",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#55625b",
+    "selectedColor": "#116e56",
+    "backgroundColor": "#fffefb",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/tabbar/home.png",
+        "selectedIconPath": "assets/tabbar/home-on.png"
+      },
+      {
+        "pagePath": "pages/book/book",
+        "text": "记账",
+        "iconPath": "assets/tabbar/book.png",
+        "selectedIconPath": "assets/tabbar/book-on.png"
+      },
+      {
+        "pagePath": "pages/receipt/receipt",
+        "text": "小票",
+        "iconPath": "assets/tabbar/receipt.png",
+        "selectedIconPath": "assets/tabbar/receipt-on.png"
+      },
+      {
+        "pagePath": "pages/list/list",
+        "text": "明细",
+        "iconPath": "assets/tabbar/list.png",
+        "selectedIconPath": "assets/tabbar/list-on.png"
+      },
+      {
+        "pagePath": "pages/remind/remind",
+        "text": "提醒",
+        "iconPath": "assets/tabbar/remind.png",
+        "selectedIconPath": "assets/tabbar/remind-on.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

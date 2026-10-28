@@ -1,0 +1,9 @@
+{
+  "name": "room",
+  "version": "1.0.0",
+  "description": "寝账 · 房间与成员",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

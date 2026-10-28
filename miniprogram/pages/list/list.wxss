@@ -1,0 +1,78 @@
+.card > .field {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+.card > .field .lbl {
+  margin: 0;
+}
+.rowbtns {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 12rpx;
+}
+
+/* 编辑弹层 */
+.edit-mask {
+  position: fixed;
+  left: 0; right: 0; top: 0; bottom: 0;
+  z-index: 60;
+  display: flex;
+  align-items: flex-end;
+  background: rgba(10, 26, 20, .45);
+}
+.edit-sheet {
+  width: 100%;
+  padding: 20rpx 32rpx calc(32rpx + env(safe-area-inset-bottom));
+  background: var(--surface);
+  border-radius: 36rpx 36rpx 0 0;
+  box-shadow: 0 -24rpx 64rpx -32rpx rgba(10, 26, 20, .5);
+}
+.edit-handle {
+  width: 72rpx; height: 8rpx;
+  margin: 0 auto 22rpx;
+  border-radius: 99rpx;
+  background: var(--line-strong);
+}
+.edit-hd {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+.date-value {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20rpx 22rpx;
+  border: 2rpx solid var(--line);
+  border-radius: 18rpx;
+  background: var(--surface);
+  font-size: 28rpx;
+  color: var(--ink);
+}
+/* 结清记录入口 + 流水行 */
+.logs-link {
+  margin: 12rpx 0 4rpx;
+  font-size: 24rpx;
+  color: var(--brand);
+  font-weight: 600;
+}
+.log-row {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 20rpx 0;
+  border-bottom: 2rpx dashed var(--line);
+}
+.log-row:last-of-type { border-bottom: 0; }
+.log-main { flex: 1 1 auto; min-width: 0; }
+.log-text { font-size: 27rpx; color: var(--ink); line-height: 1.45; }
+.log-meta { margin-top: 4rpx; font-size: 23rpx; color: var(--ink-3); }
+.log-amt {
+  flex: 0 0 auto;
+  font-size: 27rpx;
+  font-weight: 700;
+  color: var(--danger);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,24 @@
+/* 提醒页局部样式：通用样式在 app.wxss，这里只补本页特有的部分 */
+
+/* 进度条：网页版用的是 .bar > i 的渐变填充，小程序没有 <i> 标签，
+   渐变必须落在真实使用的 .bar-fill 上（见 remind.wxml） */
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0f6b53, #2a9b7a);
+  border-radius: inherit;
+  min-width: 6rpx;
+}
+
+.field-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 22rpx;
+}
+
+.field-block {
+  margin: 26rpx 0 0;
+}
+
+.quote .pre-wrap {
+  white-space: pre-wrap;
+}

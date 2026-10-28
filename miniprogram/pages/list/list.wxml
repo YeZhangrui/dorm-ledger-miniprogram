@@ -1,0 +1,107 @@
+<view class="page-wrap">
+  <view class="page-head">
+    <view>
+      <view class="h1">明细</view>
+    </view>
+  </view>
+
+  <!-- 二级菜单：与底部 tabBar 同一套选中态（品牌绿实底 + 白字） -->
+  <view class="seg">
+    <view class="{{filter === 'open' ? 'on' : ''}}" data-filter="open" bindtap="setFilter">未结清</view>
+    <view class="{{filter === 'all' ? 'on' : ''}}" data-filter="all" bindtap="setFilter">全部</view>
+  </view>
+
+  <view id="listOut">
+    <view wx:if="{{!records.length}}" class="empty">{{emptyText}}</view>
+
+    <view class="card" wx:for="{{records}}" wx:key="id">
+      <view class="h3">
+        <text class="t">{{item.icon}} {{item.item}}</text>
+        <text class="muted">{{item.date}}</text>
+      </view>
+      <view class="muted" style="margin-bottom:6px">原始语句：“{{item.raw}}”</view>
+      <view wx:if="{{item.isReceipt}}" class="muted" style="margin-bottom:6px">来源：🧾 小票识别{{item.receiptText}}</view>
+
+      <view class="field">
+        <view class="lbl">总额</view>
+        <view style="flex:1 1 auto;font-weight:700">{{item.amountText}}</view>
+        <text class="muted">{{item.payer}} 垫付</text>
+      </view>
+
+      <view style="margin:6px 0">
+        <text
+          class="tag {{c.cls}}"
+          wx:for="{{item.chips}}"
+          wx:for-item="c"
+          wx:key="name"
+          data-id="{{item.id}}"
+          data-name="{{c.name}}"
+          bindtap="onTogglePerson"
+        >{{c.text}}</text>
+      </view>
+
+      <view class="logs-link" data-id="{{item.id}}" bindtap="onLogs">结清记录 ›</view>
+
+      <view class="rowbtns">
+        <view wx:if="{{isOwner || item.mine}}" class="btn sm ghost" data-id="{{item.id}}" bindtap="onEditOpen">编辑</view>
+        <view class="btn sm ghost" data-id="{{item.id}}" bindtap="onClearOne">该笔全部结清</view>
+        <view wx:if="{{isOwner || item.mine}}" class="btn sm danger" data-id="{{item.id}}" bindtap="onRemove">撤销这笔</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 编辑弹层：金额 / 项目 / 日期（改完由云端重算分摊） -->
+  <view wx:if="{{editing}}" class="edit-mask" bindtap="onEditCancel">
+    <view class="edit-sheet" catchtap="noop">
+      <view class="edit-handle"></view>
+      <view class="edit-hd">
+        <view class="h2">编辑这笔</view>
+        <text class="muted">垫付人：{{editing.payer}}</text>
+      </view>
+
+      <view class="field">
+        <view class="lbl">金额（元）</view>
+        <input class="input" type="digit" value="{{editAmount}}" bindinput="onEditAmount" placeholder-class="ph" placeholder="0.00" />
+      </view>
+
+      <view class="field" style="margin-top:20rpx">
+        <view class="lbl">项目</view>
+        <input class="input" value="{{editItem}}" bindinput="onEditItem" maxlength="40" placeholder-class="ph" placeholder="这笔钱花在什么上" />
+      </view>
+
+      <view class="field" style="margin-top:20rpx">
+        <view class="lbl">日期</view>
+        <picker mode="date" value="{{editDate}}" bindchange="onEditDate">
+          <view class="date-value">{{editDate}}</view>
+        </picker>
+      </view>
+
+      <view class="hint">改金额后，每个人的分摊会按原规则重新算（云端重算，不会出现尾差错账）。</view>
+
+      <view class="actionbar">
+        <view class="btn" bindtap="onEditSave">保存</view>
+        <view class="btn ghost" bindtap="onEditCancel">取消</view>
+      </view>
+    </view>
+  </view>
+  <!-- 结清流水弹层 -->
+  <view wx:if="{{logsFor}}" class="edit-mask" bindtap="onLogsClose">
+    <view class="edit-sheet" catchtap="noop">
+      <view class="edit-handle"></view>
+      <view class="edit-hd">
+        <view class="h2">{{logsFor.title}}</view>
+      </view>
+      <view wx:if="{{!logsFor.items.length}}" class="empty">还没有结清记录</view>
+      <view class="log-row" wx:for="{{logsFor.items}}" wx:key="key">
+        <view class="log-main">
+          <view class="log-text">{{item.text}}</view>
+          <view class="log-meta">{{item.meta}}</view>
+        </view>
+        <text class="log-amt">{{item.amountText}}</text>
+      </view>
+      <view class="actionbar">
+        <view class="btn ghost" bindtap="onLogsClose">关闭</view>
+      </view>
+    </view>
+  </view>
+</view>

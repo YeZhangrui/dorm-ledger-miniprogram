@@ -1,0 +1,75 @@
+{
+  "description": "寝室公共开支智能记账与分摊提醒 · 微信小程序版",
+  "packOptions": {
+    "ignore": [
+      {
+        "type": "folder",
+        "value": "_tools"
+      },
+      {
+        "type": "folder",
+        "value": "_preview"
+      },
+      {
+        "type": "folder",
+        "value": "_audit"
+      },
+      {
+        "type": "file",
+        "value": "README.md"
+      },
+      {
+        "type": "file",
+        "value": "UI优化-改动记录-20261027.md"
+      },
+      {
+        "type": "folder",
+        "value": "cloudfunctions"
+      }
+    ],
+    "include": []
+  },
+  "cloudfunctionRoot": "cloudfunctions/",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "autoAudits": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": true,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false
+  },
+  "compileType": "miniprogram",
+  "appid": "wxaa72da44676fa4ff",
+  "projectname": "dorm-ledger-mp",
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
+  "simulatorPluginLibVersion": {},
+  "isGameTourist": false
+}

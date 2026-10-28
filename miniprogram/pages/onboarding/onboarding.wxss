@@ -1,0 +1,165 @@
+/* 引导页：品牌头 + 两张卡片，尽量少打扰 */
+
+.ob-page {
+  padding-top: 48rpx;
+  gap: 28rpx;
+}
+
+.ob-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  padding: 24rpx 0 8rpx;
+}
+
+.ob-mark {
+  width: 108rpx;
+  height: 108rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52rpx;
+  border-radius: 30rpx;
+  background: var(--brand-soft);
+  border: 2rpx solid #cbe5d9;
+}
+
+.ob-title {
+  margin-top: 8rpx;
+  font-size: 42rpx;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: var(--ink);
+}
+
+.ob-sub {
+  font-size: 25rpx;
+  color: var(--ink-3);
+}
+
+/* 昵称头像 */
+.ob-profile {
+  display: flex;
+  align-items: flex-start;
+  gap: 24rpx;
+}
+
+/* 头像框和昵称框统一 120rpx 高、顶对齐 */
+.ob-profile-main .lbl {
+  line-height: 34rpx;
+}
+
+.ob-profile-main .input {
+  height: 120rpx;
+  min-height: 120rpx;
+  padding: 0 22rpx;
+  display: flex;
+  align-items: center;
+}
+
+.ob-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  flex: 0 0 auto;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx dashed var(--line-strong);
+  border-radius: 32rpx;
+  background: var(--surface-2);
+  color: var(--ink-3);
+  line-height: 1;
+}
+
+.ob-avatar::after {
+  border: 0;
+}
+
+.ob-avatar-img {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 32rpx;
+}
+
+.ob-avatar-ph {
+  font-size: 44rpx;
+  color: var(--ink-3);
+}
+
+.ob-profile-main {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* 三段动作 */
+.ob-block {
+  margin-bottom: 8rpx;
+}
+
+.ob-block .lbl {
+  margin-bottom: 12rpx;
+}
+
+.ob-or {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin: 28rpx 0 24rpx;
+  font-size: 24rpx;
+  color: var(--ink-3);
+}
+
+.ob-or::before,
+.ob-or::after {
+  content: "";
+  height: 2rpx;
+  flex: 1 1 auto;
+  background: var(--line);
+}
+
+.ob-join {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.ob-join .ob-code {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-num);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.ob-join .btn {
+  flex: 0 0 auto;
+}
+
+.ob-foot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  padding: 8rpx 0 24rpx;
+  font-size: 24rpx;
+}
+
+.ob-foot .link {
+  font-size: 24rpx;
+}
+
+.ob-dot {
+  color: var(--ink-4);
+}
+
+.ob-mono {
+  font-family: var(--font-num);
+  font-size: .94em;
+  padding: 2rpx 8rpx;
+  border-radius: 8rpx;
+  background: rgba(21, 34, 28, .07);
+}

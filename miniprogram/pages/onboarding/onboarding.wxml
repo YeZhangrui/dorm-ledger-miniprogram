@@ -1,0 +1,102 @@
+<view class="page-wrap ob-page">
+  <view class="ob-hero">
+    <view class="ob-mark">📒</view>
+    <view class="ob-title">寝账</view>
+    <view class="ob-sub">寝室公共开支，一本账大家清楚</view>
+  </view>
+
+  <view wx:if="{{!cloudReady && !checking}}" class="alert">
+    <text>⚠️</text>
+    <view class="t">云端还没配置：现在的账本只存在这台手机上。请在 <text class="ob-mono">config/env.js</text> 里填好云环境 ID 后重新编译。</view>
+  </view>
+
+  <block wx:if="{{!checking}}">
+  <view wx:if="{{invited}}" class="alert ok">
+    <text>🎉</text>
+    <view class="t">室友邀请你加入房间 <text class="ob-mono">{{inviteCode}}</text>，填个昵称后点下面的「加入」就行。</view>
+  </view>
+
+  <!-- 第一步：昵称头像 -->
+  <view class="card">
+    <view class="card-head">
+      <view>
+        <view class="h2">室友怎么称呼你</view>
+        <view class="card-sub">只给同一个房间的室友看，随时能改</view>
+      </view>
+    </view>
+
+    <view class="ob-profile">
+      <button class="ob-avatar" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+        <image wx:if="{{avatarUrl}}" class="ob-avatar-img" src="{{avatarUrl}}" mode="aspectFill" />
+        <text wx:else class="ob-avatar-ph">＋</text>
+      </button>
+      <view class="ob-profile-main">
+        <view class="lbl">昵称</view>
+        <input
+          class="input"
+          type="nickname"
+          value="{{name}}"
+          bindinput="onName"
+          maxlength="8"
+          placeholder-class="ph"
+          placeholder="例如：陈默"
+        />
+      </view>
+    </view>
+  </view>
+
+  <!-- 第二步：建房 / 加入 / 迁移 -->
+  <view class="card">
+    <view class="card-head">
+      <view>
+        <view class="h2">然后选一本账</view>
+        <view class="card-sub">新建一本给室友，或者输入房间码加入</view>
+      </view>
+    </view>
+
+    <view class="ob-block">
+      <view class="lbl">新建寝室账本</view>
+      <input
+        class="input"
+        value="{{roomName}}"
+        bindinput="onRoomName"
+        maxlength="16"
+        placeholder-class="ph"
+        placeholder="{{name ? name + '的寝室' : '例如：3栋502'}}"
+      />
+      <view class="btn" style="margin-top:20rpx" bindtap="onCreate">{{busy === 'create' ? '创建中…' : '创建并进入'}}</view>
+    </view>
+
+    <view class="ob-or"><text>或</text></view>
+
+    <view class="ob-block">
+      <view class="lbl">输入 6 位房间码加入</view>
+      <view class="ob-join">
+        <input
+          class="input ob-code"
+          value="{{joinCode}}"
+          bindinput="onJoinCode"
+          maxlength="6"
+          placeholder-class="ph"
+          placeholder="A7K2M9"
+        />
+        <view class="btn sm" bindtap="onJoin">{{busy === 'join' ? '加入中…' : '加入'}}</view>
+      </view>
+      <view class="hint">房间码由室友发给你，字母数字共 6 位（已自动去掉 0 / O / 1 / I 这类易混字符）。</view>
+    </view>
+
+    <view wx:if="{{hasLocal}}" class="ob-block">
+      <view class="lbl">本机还有一本旧账</view>
+      <view class="hint">{{localText}}</view>
+      <view class="btn ghost" style="margin-top:16rpx" bindtap="onImport">{{busy === 'import' ? '迁移中…' : '把本机账本搬到云端'}}</view>
+    </view>
+  </view>
+
+  </block>
+
+  <view class="ob-foot">
+    <text class="link" bindtap="goAbout">隐私政策与用户协议</text>
+    <text class="ob-dot">·</text>
+    <text class="link" bindtap="useLocal">先不联网，继续用本机</text>
+  </view>
+</view>

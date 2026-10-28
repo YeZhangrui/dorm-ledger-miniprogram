@@ -1,0 +1,71 @@
+<view class="page-wrap">
+  <view class="page-head">
+    <view>
+      <view class="h1">关于与协议</view>
+      <view class="p">这里说明小程序收集什么、怎么用、怎么删，以及使用规则。</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-head">
+      <view>
+        <view class="h2">这是什么</view>
+      </view>
+    </view>
+    <view class="p-text">寝账是一个寝室公共开支记账工具：室友共同记录水电费、网费等公共支出，系统按人数或住宿天数自动分摊，并算出谁该付谁多少钱。它只做记录和计算，<text class="strong">不提供支付、转账、借贷、理财等任何金融服务，也不托管资金</text>。</view>
+    <view class="p-text">当前版本：{{version}}</view>
+  </view>
+
+  <view class="card">
+    <view class="card-head">
+      <view>
+        <view class="h2">隐私政策（摘要）</view>
+        <view class="card-sub">完整说明以微信后台提交的《用户隐私保护指引》为准</view>
+      </view>
+    </view>
+
+    <view class="sec">
+      <view class="sec-t">我们收集哪些信息</view>
+      <view class="p-text">· 昵称与头像：用于在同一房间内区分成员，由你主动填写/选择；</view>
+      <view class="p-text">· 账目内容：金额、项目、参与人、结清状态，这些是账本本身；</view>
+      <view class="p-text">· 小票照片：仅在你主动使用「拍照记账」时上传，用于识别票面文字；</view>
+      <view class="p-text">· 剪贴板：仅在你主动点「复制/粘贴」时读写，用于导出备份和导入。</view>
+    </view>
+
+    <view class="sec">
+      <view class="sec-t">这些信息怎么用</view>
+      <view class="p-text">· 账目只存于你所在房间，仅同房间成员可见，不会公开展示；</view>
+      <view class="p-text">· 小票照片会发送给第三方 AI 服务（DeepSeek）识别，识别完成后立即从云存储删除，不留存；</view>
+      <view class="p-text">· 我们不会把你的数据用于广告、画像或出售给第三方。</view>
+    </view>
+
+    <view class="sec">
+      <view class="sec-t">怎么删除</view>
+      <view class="p-text">· 单笔账目：在「明细」里撤销；</view>
+      <view class="p-text">· 整个房间：房主可在「房间码」页解散房间，解散后成员将看不到该房间数据；</view>
+      <view class="p-text">· 你的昵称头像：可在「成员设置」里随时修改。</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-head">
+      <view>
+        <view class="h2">用户协议（摘要）</view>
+      </view>
+    </view>
+    <view class="p-text">1. 本小程序是记账工具，记录的金额与分摊结果由你与室友确认，不构成任何付款义务或债务凭证。</view>
+    <view class="p-text">2. 请勿在小票照片或备注中上传身份证、银行卡等与记账无关的敏感信息。</view>
+    <view class="p-text">3. 房间码相当于房间钥匙，请只分享给室友；怀疑泄露时可在房间页重置房间码。</view>    <view class="p-text">4. 使用 AI 识图属于增值功能，识别结果可能出错，入账前请逐行核对。</view>
+    <view class="p-text">5. 因不可抗力或平台故障导致的数据丢失，我们会尽力协助恢复，但不承担超出法律规定的责任。</view>
+  </view>
+
+  <view class="card">
+    <view class="card-head">
+      <view>
+        <view class="h2">联系与反馈</view>
+        <view class="card-sub">{{contact}}</view>
+      </view>
+    </view>
+    <button class="btn" open-type="contact" style="margin-top:8rpx">联系开发者</button>
+  </view>
+</view>

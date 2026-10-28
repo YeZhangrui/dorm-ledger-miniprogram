@@ -1,0 +1,114 @@
+/* 小票页局部样式：只写与全局不同的部分 */
+
+.filepick {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+
+.field-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 22rpx;
+}
+
+.pick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+}
+
+.field-block {
+  margin: 28rpx 0 0;
+}
+
+.field-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+/* 「JSON 模式」这行要「左标签 + 右开关」，.field 默认是竖排，这里扳回横排 */
+.field.row-between {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.scanwrap {
+  margin-top: 16rpx;
+  border: 2rpx solid var(--line);
+  border-radius: 20rpx;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+
+.scanwrap image {
+  width: 100%;
+  display: block;
+}
+
+/* 明细行：勾选框 / 项目名（左对齐）/ 金额（右对齐）/ 低置信度标签 */
+.rline {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  margin-bottom: 14rpx;
+  padding: 0;
+}
+
+.rline .ck {
+  flex: 0 0 auto;
+}
+
+/* 覆盖全局 input{min-height:88rpx}，否则每行会有 44px 高 */
+.rline input {
+  min-height: 0;
+  height: 76rpx;
+  padding: 0 18rpx;
+  border: 2rpx solid var(--line);
+  border-radius: 16rpx;
+  background: var(--surface);
+  font-size: 27rpx;
+}
+
+.rline .rl-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+}
+
+.rline .rl-amt {
+  flex: 0 0 auto;
+  width: 170rpx;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.rline .tag {
+  flex: 0 0 auto;
+}
+
+.code {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--font-num);
+  font-size: 22rpx;
+  line-height: 1.65;
+  max-height: 480rpx;
+  overflow: auto;
+}
+
+/* 入账日期：长得和输入框一致 */
+.date-value {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 18rpx 22rpx;
+  border: 2rpx solid var(--line);
+  border-radius: 18rpx;
+  background: var(--surface);
+  font-size: 28rpx;
+  color: var(--ink);
+}

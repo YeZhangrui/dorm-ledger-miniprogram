@@ -1,0 +1,221 @@
+/**
+ * 首页样式（app.wxss 的补充与覆盖）
+ * 只写小程序端必须的修正：自定义导航安全区、头部信息层级、移动端布局。
+ * 页面 wxss 在 app.wxss 之后加载，同权重时以本文件为准。
+ */
+
+.page-home {
+  min-height: 100vh;
+  background: var(--paper);
+}
+
+/* ---------- 自定义导航头部 ----------
+   padding-top 由 JS 按 statusBarHeight 写入；
+   这里不要再写 env(safe-area-inset-top)，否则部分机型会让位两次。 */
+.topbar {
+  padding-top: 0;
+}
+
+.topbar .topbar-inner {
+  padding: 16rpx 32rpx 40rpx;
+}
+
+/* 与系统胶囊同一行：内容只在左侧，右侧留白由内联 style 写入 */
+.topbar .nav-row {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  box-sizing: border-box;
+}
+
+.topbar .brand-mark {
+  font-size: 40rpx;
+  line-height: 1;
+}
+
+.topbar .nav-row .brand-kicker {
+  margin-bottom: 0;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ---------- 标题区 ---------- */
+.topbar .hero {
+  display: block;
+  margin-top: 20rpx;
+}
+
+.topbar .hero-main {
+  min-width: 0;
+}
+
+.topbar .dorm {
+  font-size: 34rpx;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--on-header);
+}
+
+.topbar .status-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8rpx 16rpx;
+  margin-top: 8rpx;
+}
+
+.topbar .status {
+  font-size: 25rpx;
+  color: var(--on-header-2);
+}
+
+.topbar .room-pill {
+  margin-top: 0;
+}
+
+.topbar .hero .label {
+  margin-top: 28rpx;
+}
+
+.topbar .hero .amount {
+  font-size: 84rpx;
+}
+
+.topbar .hero-meta {
+  display: none;
+}
+
+/* ---------- 操作按钮：单独一行，不与胶囊抢位置 ---------- */
+.topbar .top-actions {
+  width: auto;
+  margin-top: 24rpx;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.topbar.min .top-actions {
+  margin-top: 16rpx;
+}
+
+/* 收起态也保留品牌小字，避免只剩一个孤零零的图标 */
+.topbar.min .brand-kicker {
+  display: block;
+}
+
+/* 收起/展开按钮固定靠右，窄屏换行时也不会挤在文字按钮后面 */
+.topbar .icon-btn.chev {
+  margin-left: auto;
+}
+
+.topbar.min .hero .amount {
+  font-size: 76rpx;
+}
+
+/* ---------- 页面内容 ---------- */
+/* 首页卡片统一整宽：不再用网格分栏，避免"每个人的账"被挤成半宽 */
+.home-grid {
+  display: block;
+}
+
+.home-grid > .card {
+  display: block;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.home-grid > .card + .card {
+  margin-top: 24rpx;
+}
+
+/* 姓名允许省略号，"已退出" 徽标不挤压 */
+.person .n {
+  min-width: 0;
+}
+
+.person .n .nm {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 每人一张小卡片：第一行 圆点 + 姓名，第二行金额。避免两列时姓名被挤成"陈.." */
+.people .person {
+  display: grid;
+  grid-template-columns: 14rpx minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 4rpx 12rpx;
+  padding: 18rpx 20rpx;
+}
+
+.people .person::before {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.people .person .n {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.people .person .b {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: start;
+  font-size: 33rpx;
+  line-height: 1.25;
+}
+
+/* 提示条里给出直达「提醒」的入口：原文案引导了去处，却没有可点的按钮 */
+.alert .alert-link {
+  margin-top: 10rpx;
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #6f4a10;
+  text-decoration: underline;
+  text-underline-offset: 4rpx;
+}
+
+.alert .alert-link:active {
+  opacity: 0.7;
+}
+
+.amt.danger {
+  color: var(--danger);
+}
+
+/* 待结清条目：金额与"标记已结清"放进内容区一行，避免右侧列把中间文字挤成窄条 */
+.rec.rec-settle > .mid {
+  display: block;
+  min-width: 0;
+}
+
+.rec-settle .rec-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-top: 12rpx;
+}
+
+.rec-settle .rec-actions .amt {
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.rec .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

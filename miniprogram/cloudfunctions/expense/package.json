@@ -1,0 +1,9 @@
+{
+  "name": "expense",
+  "version": "1.0.0",
+  "description": "寝账 · 账目、分摊与结清",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

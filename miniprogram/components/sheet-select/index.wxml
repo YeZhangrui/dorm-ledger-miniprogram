@@ -1,0 +1,34 @@
+<view class="ss-trigger {{disabled || !cur ? 'is-empty' : ''}}" bindtap="openPanel">
+  <text class="ss-text">{{disabled ? empty : (cur ? cur.label : placeholder)}}</text>
+  <text class="ss-chev">⌄</text>
+</view>
+
+<view wx:if="{{open}}" class="ss-mask" bindtap="closePanel">
+  <view class="ss-sheet" catchtap="noop">
+    <view class="ss-handle"></view>
+    <view class="ss-hd">
+      <view class="ss-title">{{title}}</view>
+      <text class="ss-sub">{{sub ? sub : rows.length + ' 项'}}</text>
+    </view>
+
+    <view
+      class="ss-item {{index === i2 ? 'on' : ''}}"
+      wx:for="{{rows}}"
+      wx:for-index="i2"
+      wx:key="id"
+      data-i="{{i2}}"
+      bindtap="pick"
+    >
+      <view class="ss-item-main">
+        <view class="ss-label">
+          <text class="ss-label-text">{{item.label}}</text>
+          <text wx:if="{{index === i2}}" class="ss-tick">✓</text>
+        </view>
+        <view wx:if="{{item.desc}}" class="ss-desc">{{item.desc}}</view>
+      </view>
+      <text wx:if="{{item.side}}" class="ss-side">{{item.side}}</text>
+    </view>
+
+    <view class="ss-cancel" bindtap="closePanel">取消</view>
+  </view>
+</view>

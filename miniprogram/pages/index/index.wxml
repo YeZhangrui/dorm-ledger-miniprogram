@@ -1,0 +1,118 @@
+<view class="page-home">
+  <!-- 头部 / 本月封面：custom 导航，顶部让出状态栏，右侧让出系统胶囊 -->
+  <view class="topbar {{compact ? 'min' : ''}}" style="padding-top:{{nav.statusBarHeight}}px">
+    <view class="topbar-inner">
+      <!-- 与胶囊同一行：只放图标 + 小标题，右侧由 JS 写入 capsuleReserve 避让宽度 -->
+      <view class="nav-row" style="min-height:{{nav.navBarHeight}}px;padding-right:{{nav.capsuleReserve}}px">
+        <view class="brand-mark">📒</view>
+        <view class="brand-kicker">寝账 · Dorm Ledger</view>
+      </view>
+
+      <view class="hero">
+        <view class="hero-main">
+          <view class="dorm">{{dormText}}</view>
+          <view class="status-row">
+            <view class="status">{{statusText}}</view>
+            <view class="room-pill" bindtap="goRoom">
+              <text>🏠 房间 {{roomText}}</text>
+              <text class="room-pill-chev">›</text>
+            </view>
+          </view>
+          <view class="label">本月公共开支</view>
+          <view class="amount">{{heroTotal}}</view>
+          <view class="sub">{{heroSub}}</view>
+          <view class="hero-mini">{{heroMini}}</view>
+        </view>
+        <view class="hero-meta">本地存储 · 离线可跑</view>
+      </view>
+
+      <view class="top-actions">
+        <view class="icon-btn" bindtap="goMembers"><text>👥</text><text>成员</text></view>
+        <view wx:if="{{showDevTools}}" class="icon-btn" bindtap="onSeed"><text>🎲</text><text>演示数据</text></view>
+        <view wx:if="{{showDevTools}}" class="icon-btn danger-ghost" bindtap="onReset"><text>🗑</text><text>清空</text></view>
+        <view class="icon-btn chev" bindtap="toggleHero">{{compact ? '⌄' : '⌃'}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="content">
+    <view class="page-wrap">
+      <view wx:if="{{showAlert}}" class="alert">
+        <text>⚠️</text>
+        <view class="t">
+          <text>两两抵消后还有 <text class="strong">{{alertTotal}}</text> 元没结清（原始 {{alertItems}} 笔小额垫付在等回款）。金额不大，但</text><text class="b">开口催最费劲</text><text>——让 AI 帮你说这句话。</text>
+          <view class="alert-link" bindtap="goRemind">去生成催缴话术 →</view>
+        </view>
+      </view>
+
+      <view class="home-grid">
+        <view class="card">
+          <view class="card-head">
+            <view>
+              <view class="h2">每个人的账</view>
+            </view>
+          </view>
+          <view class="people">
+            <view class="person {{item.cls}} {{item.ex ? 'out' : ''}}" wx:for="{{people}}" wx:key="name">
+              <view class="n">
+                <text class="nm">{{item.name}}</text>
+                <text wx:if="{{item.ex}}" class="ex">已退出</text>
+              </view>
+              <text class="b {{item.cls}}">{{item.txt}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="card">
+          <view class="card-head">
+            <view>
+              <view class="h2">待结清清单</view>
+              <view class="card-sub">{{unsettledCountText}}</view>
+            </view>
+          </view>
+          <view>
+            <view wx:if="{{!hasOpen}}" class="empty">没有未结清的账，寝室财务健康 👍</view>
+            <view class="rec rec-settle" wx:for="{{settle}}" wx:key="key">
+              <view class="ico">💸</view>
+              <view class="mid">
+                <view class="title">{{item.from}} → {{item.to}}</view>
+                <view class="meta">{{item.detail}}</view>
+                <view wx:if="{{item.offsetText}}" class="meta">{{item.offsetText}}</view>
+                <view class="rec-actions">
+                  <text class="amt danger">{{item.amountText}}</text>
+                  <view class="btn sm ghost" data-from="{{item.from}}" data-to="{{item.to}}" bindtap="onSettle">标记已结清</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="card">
+        <view class="card-head">
+          <view>
+            <view class="h2">最近记录</view>
+          </view>
+          <view wx:if="{{recent.length}}" class="link" bindtap="goList">查看全部 →</view>
+        </view>
+        <view wx:if="{{!recent.length}}" class="empty">还没有记录，去“记账”说一句吧</view>
+        <view class="rec" wx:for="{{recent}}" wx:key="key">
+          <view class="ico">{{item.icon}}</view>
+          <view class="mid">
+            <view class="title">
+              {{item.item}}
+              <text class="tag {{t.cls}}" wx:for="{{item.tags}}" wx:for-item="t" wx:key="text">{{t.text}}</text>
+            </view>
+            <view class="meta">{{item.meta}}</view>
+          </view>
+          <view>
+            <view class="amt">{{item.amountText}}</view>
+            <view wx:if="{{item.tail}}" class="meta" style="text-align:right">含尾差</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="btn cta" bindtap="goBook">＋ 记一笔（一句话就行）</view>
+    </view>
+  </view>
+</view>

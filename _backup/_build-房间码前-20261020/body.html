@@ -1,0 +1,459 @@
+<div class="phone" id="app">
+
+  <!-- ================= 头部 / 本月封面 ================= -->
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner">
+      <div class="brand-row">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 5.6A2.6 2.6 0 0 1 6.6 3H20v18H6.6A2.6 2.6 0 0 1 4 18.4z"/><path d="M4 17.4A2.6 2.6 0 0 1 6.6 14.8H20"/><path d="M8 7h7M8 10.5h5"/></svg>
+          </span>
+          <div class="brand-text">
+            <div class="brand-kicker">寝账 · Dorm Ledger</div>
+            <div class="dorm" id="topDorm">寝室公共开支台账</div>
+            <div class="status" id="topStatus">本地存储 · 离线可跑</div>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" id="btnMembers" title="增删成员、改人数、改记账人">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-1.8a4 4 0 0 0-4-4H6.5a4 4 0 0 0-4 4V21"/><circle cx="9.2" cy="7.2" r="3.2"/><path d="M17 11.2a3.2 3.2 0 1 0 0-6.4"/><path d="M21.5 21v-1.6a4 4 0 0 0-3-3.8"/></svg>
+            <span>成员</span>
+          </button>
+          <button class="icon-btn" id="btnSeed" title="按当前成员生成演示数据">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="6.5" ry="2.5"/><path d="M5.5 5.5v6c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5v-6"/><path d="M5.5 11.5v6c0 1.4 2.9 2.5 6.5 2.5"/><path d="m18.6 15.6.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/></svg>
+            <span>演示数据</span>
+          </button>
+          <button class="icon-btn danger-ghost" id="btnReset" title="清空账目（成员设置保留）">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V5h6v2"/><path d="M6.5 7l.8 13h9.4l.8-13"/><path d="M10 11v6M14 11v6"/></svg>
+            <span>清空</span>
+          </button>
+          <button class="icon-btn chev" id="btnHero" title="收起 / 展开头部" aria-label="收起或展开头部">⌃</button>
+        </div>
+      </div>
+
+      <div class="hero">
+        <div class="hero-main">
+          <div class="label">本月公共开支</div>
+          <div class="amount" id="heroTotal">¥0.00</div>
+          <div class="sub" id="heroSub">人均 ¥0.00 · 0 笔</div>
+          <div class="hero-mini" id="heroMini">本月 ¥0.00</div>
+        </div>
+        <div class="hero-meta">本地存储 · 离线可跑</div>
+      </div>
+    </div>
+  </header>
+
+
+
+  <!-- ================= 主导航 ================= -->
+  <nav class="nav" aria-label="主导航">
+    <div class="nav-inner">
+      <button data-go="home" class="on">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v10h14V10"/></svg>首页
+      </button>
+      <button data-go="book">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>记账
+      </button>
+      <button data-go="receipt">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6"/><path d="M9 12h6"/></svg>小票
+      </button>
+      <button data-go="list">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>明细
+      </button>
+      <button data-go="remind">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>提醒
+      </button>
+    </div>
+  </nav>
+
+  <!-- ================= 内容 ================= -->
+  <main class="content" id="content">
+
+    <!-- ============ 首页 ============ -->
+    <section class="view on" id="view-home">
+      <div id="homeAlert"></div>
+
+      <div class="home-grid">
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <h2>每个人的账</h2>
+              <p class="card-sub">已垫付 − 应承担 = 净差额</p>
+            </div>
+          </div>
+          <div class="people" id="homePeople"></div>
+          <p class="note">绿色 = 别人该给他，红色 = 他还该掏；“已退出”的成员仍有历史账目。</p>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <h2>待结清清单</h2>
+              <p class="card-sub" id="unsettledCount"></p>
+            </div>
+          </div>
+          <div id="homeSettle"></div>
+        </section>
+      </div>
+
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h2>最近记录</h2>
+            <p class="card-sub">最近 5 笔账目，按时间倒序</p>
+          </div>
+          <button class="link" data-go="list">查看全部 →</button>
+        </div>
+        <div id="homeRecent"></div>
+      </section>
+
+      <button class="btn cta" data-go="book">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+        记一笔（一句话就行）
+      </button>
+    </section>
+
+    <!-- ============ 记账 ============ -->
+    <section class="view" id="view-book">
+      <div class="page-head">
+        <div>
+          <h1>一句话记账</h1>
+          <p>像在群里说话一样描述这笔开销，AI 会抽出金额、项目、垫付人和参与人。</p>
+        </div>
+        <span class="pill" id="bookWho">记账人：陈默</span>
+      </div>
+
+      <section class="card">
+        <div class="field">
+          <label for="nlInput">今天花了什么？</label>
+          <textarea id="nlInput" placeholder="例：今天买水 12.4 四个人分" rows="3"></textarea>
+        </div>
+
+        <button class="btn" id="btnParse" style="margin-top:16px">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2l1.7 4.4 4.4 1.7-4.4 1.7L12 15.4l-1.7-4.4L5.9 9.3l4.4-1.7z"/><path d="m18.2 15.4.7 1.9 1.9.7-1.9.7-.7 1.9-.7-1.9-1.9-.7 1.9-.7z"/></svg>
+          解析这句话
+        </button>
+
+        <div class="samples">
+          <span class="samples-label">试试这样说</span>
+          <div class="chips" id="sampleChips"></div>
+        </div>
+
+        <p class="hint">解析后必须点“确认入账”才会写进台账——AI 不替你决定钱的事。要换人 / 改人数，点右上角“成员”。</p>
+      </section>
+
+      <section class="card result-card" id="parseCard" style="display:none">
+        <div class="card-head">
+          <div>
+            <h2>识别结果 <span class="pill">可修改</span></h2>
+            <p class="card-sub">核对无误后再入账</p>
+          </div>
+          <span class="confidence" id="confLabel"></span>
+        </div>
+
+        <div id="parseWarn"></div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="fAmount">金额（元）</label>
+            <input id="fAmount" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00" />
+          </div>
+          <div class="field">
+            <label for="fItem">项目</label>
+            <input id="fItem" type="text" placeholder="这笔钱花在什么上" />
+          </div>
+          <div class="field">
+            <label for="fCategory">类别</label>
+            <select id="fCategory">
+              <option>饮用水</option>
+              <option>电费</option>
+              <option>网费</option>
+              <option>日用品</option>
+              <option>食品</option>
+              <option>维修</option>
+              <option>其他</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fPayer">垫付人</label>
+            <select id="fPayer"></select>
+          </div>
+        </div>
+
+        <div class="field-block">
+          <div class="field-head">
+            <label>参与人</label>
+            <span class="hint-inline">点按选择，至少保留 1 人</span>
+          </div>
+          <div class="pick" id="fParts"></div>
+          <div class="seg" role="tablist" aria-label="分摊方式">
+            <button data-mode="equal" class="on" type="button">等额均摊</button>
+            <button data-mode="days" type="button">按居住天数</button>
+          </div>
+          <div class="days" id="fDays" style="display:none"></div>
+        </div>
+
+        <details class="jsonbox">
+          <summary>查看 AI 抽取的 JSON</summary>
+          <pre id="jsonOut"></pre>
+        </details>
+
+        <div class="actionbar">
+          <button class="btn" id="btnConfirm">确认入账</button>
+          <button class="btn ghost" id="btnCancel">取消</button>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============ 小票 ============ -->
+    <section class="view" id="view-receipt">
+      <div class="page-head">
+        <div>
+          <h1>小票识别</h1>
+          <p>拍一张，或者把票面文字粘进来，逐行核对后再入账。照片默认只在本机预览。</p>
+        </div>
+      </div>
+
+      <section class="card card-receipt-setup">
+        <div class="card-head">
+          <div>
+            <h2>上传或粘贴</h2>
+            <p class="card-sub">两种方式：AI 读图，或手动粘贴票面文字走同一套解析</p>
+          </div>
+        </div>
+
+        <div class="filepick">
+          <input type="file" id="receiptFile" accept="image/*" />
+          <label class="filebtn" for="receiptFile">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h2L10 4h4l1.5 2h2A2.5 2.5 0 0 1 20 8.5v9A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5z"/><circle cx="12" cy="12.8" r="3.4"/></svg>
+            <span>
+              <strong>选择小票照片</strong>
+              <em>JPG / PNG，手机拍完直接传</em>
+            </span>
+          </label>
+        </div>
+        <div class="file-name muted" id="fileName">未选择文件（JPG / PNG 均可）</div>
+        <div id="uploadPreview"></div>
+        <div id="scanHost"></div>
+
+        <details class="ai-setup" id="aiBox">
+          <summary aria-label="AI 识图设置" title="AI 识图设置">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9"/><path d="M17 7h3"/><circle cx="15" cy="7" r="2"/><path d="M4 17h3"/><path d="M11 17h9"/><circle cx="9" cy="17" r="2"/></svg>
+          </summary>
+          <div class="ai-body">
+            <div class="ai-panel-head"><strong>AI 识图设置</strong><span class="ai-badge">可选</span></div>
+            <p class="hint">读图交给多模态大模型（OpenAI 兼容协议）。DeepSeek 请用 <code>deepseek-flash</code>（支持图片），接口填 <code>https://api.deepseek.com</code>。<b>Key 只存在本机 localStorage，不写进 HTML</b>；正式上线必须走服务端代理，仓库里给了现成的 <code>ai_proxy.py</code>。</p>
+            <div class="field-grid">
+              <div class="field">
+                <label id="aiPresetLabel">服务商</label>
+                <div class="preset-picker" id="presetPicker">
+                  <button type="button" class="preset-trigger" id="presetTrigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="presetMenu" aria-labelledby="aiPresetLabel">
+                    <span class="preset-value" id="presetValue">DeepSeek（flash · 支持图片）</span>
+                    <svg class="preset-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </button>
+                  <div class="preset-menu" id="presetMenu" role="listbox" aria-labelledby="aiPresetLabel" hidden></div>
+                  <select id="aiPreset" class="preset-native" aria-hidden="true" tabindex="-1">
+                    <option value="deepseek">DeepSeek（flash · 支持图片）</option>
+                    <option value="dashscope">通义千问（DashScope）</option>
+                    <option value="zhipu">智谱 GLM</option>
+                    <option value="volc">火山方舟（豆包）</option>
+                    <option value="openai">OpenAI</option>
+                    <option value="proxy">本机代理（Key 不落浏览器）</option>
+                    <option value="custom">自定义（OpenAI 兼容）</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field">
+                <label for="aiBase">接口</label>
+                <input id="aiBase" type="text" placeholder="https://api.deepseek.com" />
+              </div>
+              <div class="field">
+                <label for="aiModel">模型</label>
+                <input id="aiModel" type="text" placeholder="deepseek-flash" />
+              </div>
+              <div class="field">
+                <label for="aiKey">API Key</label>
+                <input id="aiKey" type="password" placeholder="sk-…（只存本机）" />
+              </div>
+            </div>
+            <label class="check"><input type="checkbox" id="aiJsonMode" /> 用 JSON 模式（更稳，部分服务商支持）</label>
+            <div class="rowbtns">
+              <button class="btn sm" id="btnAiSave">保存</button>
+              <button class="btn sm ghost" id="btnAiClear">清除</button>
+            </div>
+            <p class="muted" id="aiState"></p>
+          </div>
+        </details>
+
+        <div class="or"><span>或者，直接粘贴票面文字</span></div>
+
+        <textarea id="receiptText" placeholder="好邻居便利店&#10;日期：2026-10-14&#10;桶装水 12.40&#10;垃圾袋 8.90&#10;合计 21.30"></textarea>
+
+        <button class="btn" id="btnRecognize" style="margin-top:12px">识别这张小票</button>
+        <p class="hint">没配 AI 也能用：一行一件商品，例如“桶装水 12.40”，一样会算出分摊。识别结果会先给你逐行核对。</p>
+      </section>
+
+      <section class="card result-card" id="receiptCard" style="display:none">
+        <div class="card-head">
+          <div>
+            <h2>识别结果</h2>
+            <p class="card-sub">逐行核对后再入账</p>
+          </div>
+          <span class="confidence" id="rconf"></span>
+        </div>
+
+        <div id="rWarn"></div>
+
+        <div class="grid2">
+          <div class="stat"><div class="k">商家（识别）</div><div class="v" id="rMerchant">—</div></div>
+          <div class="stat"><div class="k">票面日期</div><div class="v" id="rDate">—</div></div>
+          <div class="stat"><div class="k">明细合计</div><div class="v" id="rSum">¥0.00</div></div>
+          <div class="stat"><div class="k">票面总额</div><div class="v" id="rTotal">¥0.00</div></div>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="rPayer">垫付人</label>
+            <select id="rPayer"></select>
+          </div>
+        </div>
+
+        <div class="field-block">
+          <div class="field-head">
+            <label>参与人</label>
+            <span class="hint-inline">至少留一个参与人</span>
+          </div>
+          <div class="pick" id="rParts"></div>
+        </div>
+
+        <div class="field-block">
+          <div class="field-head">
+            <label>明细行</label>
+            <span class="hint-inline">取消勾选＝这笔不入账；名称 / 金额可直接改</span>
+          </div>
+          <div id="rLines"></div>
+        </div>
+
+        <details class="jsonbox">
+          <summary>查看 OCR 原始文字 / 解析出的 JSON</summary>
+          <pre id="rJson"></pre>
+        </details>
+
+        <div class="actionbar">
+          <button class="btn" id="btnReceiptMerge">合并成一笔入账</button>
+          <button class="btn ghost" id="btnReceiptEach">逐条入账</button>
+          <button class="btn ghost" id="btnReceiptCancel">取消</button>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============ 明细 ============ -->
+    <section class="view" id="view-list">
+      <div class="page-head">
+        <div>
+          <h1>明细</h1>
+          <p>全部账目。点参与人标签可切换该人的结清状态；撤销这笔会立即重算所有人的账。</p>
+        </div>
+        <div class="seg compact" role="tablist" aria-label="筛选明细">
+          <button data-filter="all" class="on" type="button">全部</button>
+          <button data-filter="open" type="button">未结清</button>
+        </div>
+      </div>
+
+      <div id="listOut"></div>
+    </section>
+
+    <!-- ============ 提醒 / 月报 ============ -->
+    <section class="view" id="view-remind">
+      <div class="page-head">
+        <div>
+          <h1>提醒与月报</h1>
+          <p>最难的不是算账，是开口。让系统替你把这句话说好，月底再自动生成一份月报。</p>
+        </div>
+      </div>
+
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h2>生成催缴话术</h2>
+            <p class="card-sub">按欠款对象和语气生成，可直接复制到寝室群</p>
+          </div>
+        </div>
+        <div class="field-grid">
+          <div class="field">
+            <label id="whoLabel">找谁</label>
+            <div class="who-picker" id="whoPicker">
+              <button type="button" class="who-trigger" id="whoTrigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="whoMenu" aria-labelledby="whoLabel">
+                <span class="who-avatar" id="whoAvatar">—</span>
+                <span class="who-text">
+                  <span class="who-main" id="whoMain">当前没有待结清</span>
+                  <span class="who-sub" id="whoSub">不用催，先享受清静</span>
+                </span>
+                <svg class="who-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div class="who-menu" id="whoMenu" role="listbox" aria-labelledby="whoLabel" hidden></div>
+              <select id="rWho" class="who-native" aria-hidden="true" tabindex="-1"></select>
+            </div>
+          </div>
+          <div class="field">
+            <label>语气</label>
+            <div class="tone-picker" id="tonePicker" role="radiogroup" aria-label="语气">
+              <button type="button" class="tone-option on" data-tone="soft" role="radio" aria-checked="true">
+                <span class="tone-name">委婉</span>
+                <span class="tone-desc">金额小 / 关系好</span>
+              </button>
+              <button type="button" class="tone-option" data-tone="fun" role="radio" aria-checked="false">
+                <span class="tone-name">幽默</span>
+                <span class="tone-desc">熟 / 群里起哄</span>
+              </button>
+              <button type="button" class="tone-option" data-tone="direct" role="radio" aria-checked="false">
+                <span class="tone-name">直接</span>
+                <span class="tone-desc">金额大 / 催过几次</span>
+              </button>
+            </div>
+            <select id="rTone" class="tone-native" aria-hidden="true" tabindex="-1">
+              <option value="soft">委婉</option>
+              <option value="fun">幽默</option>
+              <option value="direct">直接</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn" id="btnRemind">生成提醒话术</button>
+        <div id="remindOut"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h2>月度报告</h2>
+            <p class="card-sub">自动统计，月底不用对账</p>
+          </div>
+        </div>
+        <div id="reportOut"></div>
+      </section>
+    </section>
+
+  </main>
+
+  <!-- ================= 成员设置 ================= -->
+  <div class="sheet-mask" id="memberMask">
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="memberTitle">
+      <div class="sheet-handle" aria-hidden="true"></div>
+      <div class="sheet-hd">
+        <div>
+          <h2 id="memberTitle">寝室成员设置</h2>
+          <p class="card-sub" id="memberCount"></p>
+        </div>
+        <button class="close-btn" id="btnCloseMembers" aria-label="关闭成员设置">✕</button>
+      </div>
+      <p class="hint">支持 <b>2–8 人</b>：改人数就加 / 删一行，改名字直接编辑。改名会同步所有历史记录；删掉的成员历史账目仍保留，显示为“已退出”。</p>
+      <div id="memberRows"></div>
+      <div class="sheet-actions">
+        <button class="btn ghost" id="btnAddMember">＋ 添加成员</button>
+        <button class="btn" id="btnSaveMembers">保存并重算</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>

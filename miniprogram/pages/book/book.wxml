@@ -1,0 +1,119 @@
+<view class="page-wrap">
+  <view class="page-head">
+    <view>
+      <view class="h1">一句话记账</view>
+    </view>
+    <view class="pill">记账人：{{me}}</view>
+  </view>
+
+  <view class="card">
+    <view class="field">
+      <view class="lbl">今天花了什么？</view>
+      <textarea class="textarea" value="{{input}}" bindinput="onInput" maxlength="200" placeholder-class="ph" placeholder="例：今天买水 12.4 四个人分"  show-confirm-bar="{{false}}" />
+    </view>
+
+    <view class="btn" style="margin-top:32rpx" bindtap="onParse">解析这句话</view>
+
+    <view class="samples">
+      <view class="samples-label">试试这样说</view>
+      <view class="chips">
+        <text class="chip" wx:for="{{samples}}" wx:key="*this" data-text="{{item}}" bindtap="useSample">{{item}}</text>
+      </view>
+    </view>
+
+  </view>
+
+  <view wx:if="{{draft}}" class="card result-card">
+    <view class="card-head">
+      <view>
+        <view class="h2">识别结果 <text class="pill">可修改</text></view>
+        <view class="card-sub">核对无误后再入账</view>
+      </view>
+      <text class="confidence">{{confText}}</text>
+    </view>
+
+    <view class="alert" wx:for="{{warnings}}" wx:key="*this">
+      <text>🤖</text>
+      <view class="t">{{item}}</view>
+    </view>
+
+    <view class="field-grid">
+      <view class="field">
+        <view class="lbl">金额（元）</view>
+        <input class="input" type="digit" value="{{amount}}" bindinput="onAmount" placeholder-class="ph" placeholder="0.00" />
+      </view>
+      <view class="field">
+        <view class="lbl">项目</view>
+        <input class="input" value="{{item}}" bindinput="onItem" placeholder-class="ph" placeholder="这笔钱花在什么上" />
+      </view>
+      <view class="field">
+        <view class="lbl">类别</view>
+        <sheet-select
+          title="这笔钱算什么"
+          placeholder="选一个类别"
+          options="{{catOptions}}"
+          index="{{catIndex}}"
+          bind:change="onCat"
+        />
+      </view>
+      <view class="field">
+        <view class="lbl">垫付人</view>
+        <sheet-select
+          title="谁先垫的钱"
+          placeholder="选垫付人"
+          options="{{payerOptions}}"
+          index="{{payerIndex}}"
+          bind:change="onPayer"
+        />
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-head">
+        <view class="lbl">参与人</view>
+      </view>
+      <view class="pick">
+        <view
+          class="p {{p.on ? 'on' : ''}}"
+          wx:for="{{parts}}"
+          wx:for-item="p"
+          wx:key="name"
+          data-i="{{index}}"
+          bindtap="togglePart"
+        >{{p.on ? '✓' : '＋'}}{{p.name}}</view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-head">
+        <view class="lbl">分摊方式</view>
+      </view>
+      <view class="seg">
+        <view class="{{mode === 'equal' ? 'on' : ''}}" data-mode="equal" bindtap="setMode">等额平分</view>
+        <view class="{{mode === 'days' ? 'on' : ''}}" data-mode="days" bindtap="setMode">按住宿天数</view>
+      </view>
+      <view wx:if="{{mode === 'days'}}" class="days">
+        <view class="day-row" wx:for="{{parts}}" wx:for-item="p" wx:key="name">
+          <view wx:if="{{p.on}}" class="day">
+            <text class="day-name">{{p.name}}</text>
+            <input class="input day-input" type="number" value="{{p.days}}" data-i="{{index}}" bindinput="onDays" />
+            <text class="muted">天</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="fold">
+      <view class="fold-head" bindtap="toggleFold">
+        <text>查看抽取出的 JSON</text>
+        <text class="fold-chev">{{foldOpen ? '⌃' : '⌄'}}</text>
+      </view>
+      <view wx:if="{{foldOpen}}" class="code"><text class="pre-wrap">{{jsonText}}</text></view>
+    </view>
+
+    <view class="actionbar">
+      <view class="btn" bindtap="onConfirm">确认入账</view>
+      <view class="btn ghost" bindtap="onCancel">取消</view>
+    </view>
+  </view>
+</view>

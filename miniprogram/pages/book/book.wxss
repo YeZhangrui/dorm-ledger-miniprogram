@@ -1,0 +1,79 @@
+/* 记账页局部样式：只写与全局不同的部分 */
+
+/* 两个字段并排容易挤，记账表单在手机上统一单列 */
+.field-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 22rpx;
+}
+
+.pick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+}
+
+.field-block {
+  margin: 28rpx 0 0;
+}
+
+.field-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+/* 按天数分摊：每人一行，输入框与"天"字对齐 */
+.days {
+  margin-top: 16rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.day-row {
+  display: block;
+}
+
+.day {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 10rpx 18rpx;
+  border: 2rpx solid var(--line);
+  border-radius: 18rpx;
+  background: var(--surface-2);
+}
+
+.day-name {
+  flex: 0 0 auto;
+  min-width: 130rpx;
+  font-size: 27rpx;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+/* 覆盖全局 input 的 min-height:88rpx，否则这一行会撑得很高 */
+.day .day-input {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 64rpx;
+  padding: 0 18rpx;
+  border-radius: 14rpx;
+  background: var(--surface);
+  text-align: right;
+  font-weight: 700;
+}
+
+.code {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--font-num);
+  font-size: 22rpx;
+  line-height: 1.65;
+}
+
+.chip {
+  cursor: pointer;
+}
