@@ -21,3 +21,6 @@ _snapshots/
 .DS_Store
 Thumbs.db
 *.log
+
+# GitHub Actions 工作流需要 gh token 的 workflow 权限，先不入库（详见 docs/仓库说明.md）
+.github/workflows/
