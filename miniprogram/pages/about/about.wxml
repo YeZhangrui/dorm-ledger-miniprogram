@@ -35,7 +35,7 @@
     <view class="sec">
       <view class="sec-t">这些信息怎么用</view>
       <view class="p-text">· 账目只存于你所在房间，仅同房间成员可见，不会公开展示；</view>
-      <view class="p-text">· 小票照片会发送给第三方 AI 服务（DeepSeek）识别，识别完成后立即从云存储删除，不留存；</view>
+      <view class="p-text">· 小票照片会发送给第三方云端识别服务，识别完成后立即从云服务器删除，不留存；</view>
       <view class="p-text">· 我们不会把你的数据用于广告、画像或出售给第三方。</view>
     </view>
 
@@ -55,7 +55,7 @@
     </view>
     <view class="p-text">1. 本小程序是记账工具，记录的金额与分摊结果由你与室友确认，不构成任何付款义务或债务凭证。</view>
     <view class="p-text">2. 请勿在小票照片或备注中上传身份证、银行卡等与记账无关的敏感信息。</view>
-    <view class="p-text">3. 房间码相当于房间钥匙，请只分享给室友；怀疑泄露时可在房间页重置房间码。</view>    <view class="p-text">4. 使用 AI 识图属于增值功能，识别结果可能出错，入账前请逐行核对。</view>
+    <view class="p-text">3. 房间码相当于房间钥匙，请只分享给室友；怀疑泄露时可在房间页重置房间码。</view>    <view class="p-text">4. 使用小票识别属于辅助功能，识别结果可能出错，入账前请逐行核对。</view>
     <view class="p-text">5. 因不可抗力或平台故障导致的数据丢失，我们会尽力协助恢复，但不承担超出法律规定的责任。</view>
   </view>
 

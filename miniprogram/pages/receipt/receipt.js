@@ -2,9 +2,12 @@
 const store = require('../../utils/store.js');
 const ai = require('../../utils/ai.js');
 const api = require('../../utils/api.js');
+const env = require('../../config/env.js');
 
 Page({
   data: {
+    // 拍照识别开关（见 config/env.js 的 receiptOcr）
+    ocrOn: !!env.receiptOcr,
     aiOpen: false,
     presetLabels: [],
     presetOptions: [],
@@ -59,7 +62,7 @@ Page({
   },
 
   aiStateText: function (cfg) {
-    if (!cfg || !cfg.base || !cfg.model) return '还没配置：识图会退回“粘贴票面文字”';
+    if (!cfg || !cfg.base || !cfg.model) return '还没配置：识别会退回“粘贴票面文字”';
     return '当前：' + cfg.model + ' @ ' + cfg.base + (cfg.key ? '（已填 Key）' : '');
   },
 
@@ -106,7 +109,7 @@ Page({
     const cfg = { preset: 'deepseek', base: preset.base, model: preset.model, key: '', jsonMode: false };
     store.saveAi(cfg);
     this.setData({ aiBase: cfg.base, aiModel: cfg.model, aiKey: '', aiJsonMode: false, aiState: this.aiStateText(cfg) });
-    wx.showToast({ title: '已清除 AI 配置', icon: 'none' });
+    wx.showToast({ title: '已清除配置', icon: 'none' });
   },
 
   chooseImage: function () {
@@ -142,7 +145,7 @@ Page({
     }
     if (!String(d.text || '').trim()) {
       wx.showToast({
-        title: d.imagePath ? '没配 AI 时读不了图，请把票面文字粘到下面' : '先选一张小票照片，或把票面文字粘到下面',
+        title: d.imagePath ? '这张图读不出来，可以把票面文字粘到下面' : '先选一张小票照片，或把票面文字粘到下面',
         icon: 'none'
       });
       return;
@@ -161,7 +164,7 @@ Page({
     }).catch(function (err) {
       that.setData({ loading: false });
       wx.showModal({
-        title: 'AI 识图失败',
+        title: '识别失败',
         content: String((err && err.message) || err) + '\n\n没配好也可以把票面文字粘到下面，一样能识别。',
         showCancel: false
       });

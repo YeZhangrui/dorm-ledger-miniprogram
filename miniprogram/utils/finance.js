@@ -562,7 +562,7 @@ function extractJsonFromText(text) {
 function normalizeAiReceipt(obj, provider, rawText) {
   const out = {
     merchant: '', date: '', total: 0, sum: 0, totals: [], lines: [], warnings: [],
-    confidence: 0.9, raw: rawText || '', provider: provider || 'AI 识图'
+    confidence: 0.9, raw: rawText || '', provider: provider || '小票识别'
   };
   if (!obj) {
     out.warnings.push('模型没返回可解析的 JSON，请重试，或改用粘贴票面文字');

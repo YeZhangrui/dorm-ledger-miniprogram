@@ -40,7 +40,7 @@
       <view wx:if="{{showAlert}}" class="alert">
         <text>⚠️</text>
         <view class="t">
-          <text>两两抵消后还有 <text class="strong">{{alertTotal}}</text> 元没结清（原始 {{alertItems}} 笔小额垫付在等回款）。金额不大，但</text><text class="b">开口催最费劲</text><text>——让 AI 帮你说这句话。</text>
+          <text>两两抵消后还有 <text class="strong">{{alertTotal}}</text> 元没结清（原始 {{alertItems}} 笔小额垫付在等回款）。金额不大，但</text><text class="b">开口催最费劲</text><text>——让系统帮你把这句话说好。</text>
           <view class="alert-link" bindtap="goRemind">去生成催缴话术 →</view>
         </view>
       </view>

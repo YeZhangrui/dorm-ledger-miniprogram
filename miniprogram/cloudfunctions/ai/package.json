@@ -1,7 +1,7 @@
 {
   "name": "ai",
   "version": "1.0.0",
-  "description": "寝账 · 小票识图（DeepSeek 多模态）",
+  "description": "小票文字识别",
   "main": "index.js",
   "dependencies": {
     "wx-server-sdk": "~2.6.3"

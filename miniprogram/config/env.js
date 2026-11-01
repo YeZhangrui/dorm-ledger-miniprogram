@@ -43,6 +43,12 @@ module.exports = {
    * 关掉它就回到纯本机模式（本机那本账还在，可以随时切回来排查问题）。
    */
   cloudLedger: true,
+  /**
+   * 小票「拍照识别」开关。
+   * 曾经因文案出现 AI 字样被判定为深度合成类目而驳回；如果再次被拒，
+   * 把这里改成 false 重新上传：界面只剩「粘贴票面文字」，一样能记账。
+   */
+  receiptOcr: true,
   isRelease: envVersion === 'release',
   /** 正式版隐藏「演示数据 / 清空 / 导入 JSON」这类开发入口 */
   showDevTools: envVersion !== 'release',

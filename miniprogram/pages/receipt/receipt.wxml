@@ -8,11 +8,11 @@
   <view class="card">
     <view class="field-block">
       <view class="field-head">
-        <view class="lbl">🤖 AI 识图</view>
+        <view class="lbl">🤖 自动识别</view>
       </view>
     </view>
 
-    <view class="field-block">
+    <view wx:if="{{ocrOn}}" class="field-block">
       <view class="field-head">
         <view class="lbl">小票照片</view>
       </view>
@@ -23,7 +23,7 @@
       <view wx:if="{{imagePath}}" class="scanwrap" bindtap="previewImage">
         <image src="{{imagePath}}" mode="widthFix" />
       </view>
-      <view wx:if="{{imagePath}}" class="hint">本机预览，未上传任何服务器；点“识别”才会把这张图发给你配置的 AI 接口。</view>
+      <view wx:if="{{imagePath}}" class="hint">本机预览，选好后再上传；点“识别”才会把这张图发到云端识别。</view>
     </view>
 
     <view class="field" style="margin-top:32rpx">
@@ -38,7 +38,7 @@
        show-confirm-bar="{{false}}" />
     </view>
 
-    <view class="btn block" style="margin-top:32rpx" bindtap="recognize">{{loading ? 'AI 读图中…' : '识别这张小票'}}</view>
+    <view class="btn block" style="margin-top:32rpx" bindtap="recognize">{{loading ? '识别中…' : '识别这张小票'}}</view>
   </view>
 
   <view wx:if="{{draft}}" class="card result-card">

@@ -22,7 +22,7 @@ function recognize(imagePath) {
     return api.ai.recognize(fileID, 'image/jpeg');
   }).then(function (rec) {
     const out = rec || {};
-    out.provider = out.provider || '云端 AI 识图';
+    out.provider = out.provider || '云端识别';
     return out;
   });
 }

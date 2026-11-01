@@ -59,7 +59,7 @@ async function takeQuota(openid, dayKey) {
     return { usageId: usageId, used: 1, limit: DAILY_LIMIT };
   } catch (e) {
     if (db.isDuplicateKey(e)) {
-      throw new db.AppError(db.ERR.QUOTA, '今天的 AI 识图次数用完了（每天 ' + DAILY_LIMIT + ' 次），明天再来或手动记账');
+      throw new db.AppError(db.ERR.QUOTA, '今天的识别次数用完了（每天 ' + DAILY_LIMIT + ' 次），明天再来或手动记账');
     }
     throw e;
   }
@@ -120,7 +120,7 @@ function postWithFetch(urlStr, bodyObj, timeoutMs) {
       try {
         return JSON.parse(text);
       } catch (e) {
-        throw new Error('AI 返回的不是 JSON');
+        throw new Error('识别结果格式异常');
       }
     });
   }).catch(function (e) {
@@ -160,7 +160,7 @@ function postWithHttps(urlStr, bodyObj, timeoutMs) {
       res.on('data', function (c) {
         size += c.length;
         if (size > 2 * 1024 * 1024) {
-          if (!finished) { finished = true; req.destroy(); reject(new Error('AI 返回内容过大')); }
+          if (!finished) { finished = true; req.destroy(); reject(new Error('识别内容过大')); }
           return;
         }
         chunks.push(c);
@@ -176,7 +176,7 @@ function postWithHttps(urlStr, bodyObj, timeoutMs) {
         try {
           resolve(JSON.parse(text));
         } catch (e) {
-          reject(new Error('AI 返回的不是 JSON'));
+          reject(new Error('识别结果格式异常'));
         }
       });
     });
@@ -209,7 +209,7 @@ function pickContent(data) {
   }
   if (typeof content !== 'string' || !content.trim()) {
     var reason = choice.finish_reason ? '（' + choice.finish_reason + '）' : '';
-    throw new db.AppError(db.ERR.INVALID, 'AI 没返回内容' + reason + '，请重试或改用粘贴票面文字');
+    throw new db.AppError(db.ERR.INVALID, '识别服务没返回内容' + reason + '，请重试或改用粘贴票面文字');
   }
   return content;
 }
@@ -242,12 +242,12 @@ async function callModel(dataUri) {
   var msg = String((lastErr && lastErr.message) || '');
   console.error('[ai][recognize] 模型调用失败：' + msg.slice(0, 200)); // 不含 Key、不含票面文字
   if (/HTTP 401|HTTP 403/.test(msg)) {
-    throw new db.AppError(db.ERR.INVALID, 'AI 服务鉴权失败，请联系管理员检查 Key');
+    throw new db.AppError(db.ERR.INVALID, '识别服务鉴权失败，请联系管理员');
   }
   if (/HTTP 429/.test(msg)) {
-    throw new db.AppError(db.ERR.QUOTA, 'AI 服务太忙了，请过一会儿再试');
+    throw new db.AppError(db.ERR.QUOTA, '识别服务太忙了，请过一会儿再试');
   }
-  throw new db.AppError(db.ERR.INTERNAL, 'AI 识图失败了，请重试，或改用粘贴票面文字');
+  throw new db.AppError(db.ERR.INTERNAL, '识别失败了，请重试，或改用粘贴票面文字');
 }
 
 /* ---------------- recognize ---------------- */
@@ -262,7 +262,7 @@ async function recognize(ctx) {
 
   /* 2) 没配 Key 直接说清楚，不占配额 */
   if (!KEY) {
-    throw new db.AppError(db.ERR.INVALID, 'AI 未配置');
+    throw new db.AppError(db.ERR.INVALID, '识别服务未配置');
   }
 
   /* 3) 当日配额 */
@@ -287,7 +287,7 @@ async function recognize(ctx) {
     var answer = await callModel(dataUri);
     var content = pickContent(answer);
     var parsed = F.extractJsonFromText(content);
-    var rec = F.normalizeAiReceipt(parsed, 'AI 识图 · ' + MODEL, content);
+    var rec = F.normalizeAiReceipt(parsed, '小票识别', content);
 
     addBytes(quota.usageId, bytes);
 
