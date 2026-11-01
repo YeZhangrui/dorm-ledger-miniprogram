@@ -41,7 +41,7 @@
     <view class="btn block" style="margin-top:32rpx" bindtap="recognize">{{loading ? '识别中…' : '识别这张小票'}}</view>
   </view>
 
-  <view wx:if="{{draft}}" class="card result-card">
+  <view wx:if="{{draft}}" id="draftCard" class="card result-card">
     <view class="card-head">
       <view>
         <view class="h2">识别结果</view>

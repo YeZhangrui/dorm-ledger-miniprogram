@@ -172,6 +172,7 @@ Page({
   },
 
   applyDraft: function (parsed, s) {
+    const that = this;
     const lines = (parsed.lines || []).map(function (l, i) {
       return { id: i, name: l.name, amountText: F.plain(l.amount), use: true, low: l.conf < 0.8 };
     });
@@ -194,6 +195,22 @@ Page({
       payerIndex: Math.max(0, s.members.indexOf(s.me)),
       parts: parts,
       foldOpen: false
+    }, function () {
+      // 结果卡片渲染完再滚，避免锚点还不存在
+      that.scrollToDraft();
+    });
+  },
+
+  /** 识别成功后自动下滑到结果卡片 */
+  scrollToDraft: function () {
+    wx.pageScrollTo({
+      selector: '#draftCard',
+      duration: 320,
+      offsetTop: -16,
+      fail: function () {
+        // 老基础库不支持 selector 时退回"滚到底部"
+        wx.pageScrollTo({ scrollTop: 100000, duration: 320 });
+      }
     });
   },
 
